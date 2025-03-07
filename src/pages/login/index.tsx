@@ -44,7 +44,7 @@ export default function Login() {
 					toast.error("Login Failed", {
 						description: ` ${error.message}. Please check your credentials and try again.`,
 					});
-					import.meta.env.DEV && console.error("Error occuered", error);
+					import.meta.env.DEV && console.error("Error occured", error);
 				},
 			},
 		);
