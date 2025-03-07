@@ -19,13 +19,13 @@ export const KyInstance = (withAuth = true) => {
 			],
 			afterResponse: [
 				(_request, _options, response) => {
-					if (response.status === 401) {
-						window.location.href = "/401";
-						toast.error("Unauthorized Access", {
-							description:
-								"You don't have permission to access this resource. Please log in and try again.",
-						});
-					}
+					// if (response.status === 401) {
+					// 	window.location.href = "/401";
+					// 	toast.error("Unauthorized Access", {
+					// 		description:
+					// 			"You don't have permission to access this resource. Please log in and try again.",
+					// 	});
+					// }
 					if (response.status === 500) {
 						toast.error("Internal Server Error", {
 							description:
