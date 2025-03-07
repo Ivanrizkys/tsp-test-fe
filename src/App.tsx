@@ -1,8 +1,10 @@
+import { ThemeProvider } from "./providers/theme-providers";
+
 function App() {
 	return (
-		<>
-			<h1>Initial Project</h1>
-		</>
+		<ThemeProvider defaultTheme="system">
+			<div>Initial Config</div>
+		</ThemeProvider>
 	);
 }
 
