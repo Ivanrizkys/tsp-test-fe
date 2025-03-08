@@ -3,10 +3,15 @@ import type { Response, ResponseMetaPagination } from "@/types/response";
 import type {
 	CreateWorkOrderRequestBody,
 	CreateWorkOrderResponse,
+	DeleteWorkOrderBulkRequestBody,
+	DeleteWorkOrderRequestParams,
+	DeleteWorkOrderResponse,
 	GetWorkOrderDetailResponse,
 	GetWorkOrderParams,
 	GetWorkOrderStatusResponse,
 	GetWorkOrdersResponse,
+	UpdateWorkOrderManagerRequest,
+	UpdateWorkOrderOperatorRequest,
 } from "@/types/work-order";
 import {
 	type DefaultError,
@@ -87,6 +92,130 @@ export const useCreateWorkOrderMutation = () => {
 					}
 				}
 				throw new Error("Create work order failed");
+			}
+		},
+	});
+};
+
+export const useUpdateWorkOrderManagerMutation = () => {
+	return useMutation<
+		Response<null>,
+		DefaultError,
+		UpdateWorkOrderManagerRequest
+	>({
+		mutationFn: async (data) => {
+			try {
+				return await KyInstance()
+					.patch(`work-orders/${data.work_order_id}/manager-update`, {
+						json: data,
+					})
+					.json();
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					try {
+						const jsonError = await error.response.json<Response<null>>();
+						throw new Error(jsonError.meta.message);
+					} catch (error) {
+						throw new Error(
+							(error as string | undefined) ??
+								"Update work order manager failed, please try again",
+						);
+					}
+				}
+				throw new Error("Update work order manager failed");
+			}
+		},
+	});
+};
+
+export const useUpdateWorkOrderOperatorMutation = () => {
+	return useMutation<
+		Response<null>,
+		DefaultError,
+		UpdateWorkOrderOperatorRequest
+	>({
+		mutationFn: async (data) => {
+			try {
+				return await KyInstance()
+					.patch(`work-orders/${data.work_order_id}/operator-update`, {
+						json: data,
+					})
+					.json();
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					try {
+						const jsonError = await error.response.json<Response<null>>();
+						throw new Error(jsonError.meta.message);
+					} catch (error) {
+						throw new Error(
+							(error as string | undefined) ??
+								"Update work order operator failed, please try again",
+						);
+					}
+				}
+				throw new Error("Update work order operator failed");
+			}
+		},
+	});
+};
+
+export const useDeleteWorkOrderBulkMutation = () => {
+	return useMutation<
+		Response<DeleteWorkOrderResponse[]>,
+		DefaultError,
+		DeleteWorkOrderBulkRequestBody
+	>({
+		mutationFn: async (data) => {
+			try {
+				return await KyInstance()
+					.delete("work-orders/bulk", {
+						json: data,
+					})
+					.json();
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					try {
+						const jsonError = await error.response.json<Response<null>>();
+						throw new Error(jsonError.meta.message);
+					} catch (error) {
+						throw new Error(
+							(error as string | undefined) ??
+								"Delete work order bulk failed, please try again",
+						);
+					}
+				}
+				throw new Error("Delete work order bulk failed");
+			}
+		},
+	});
+};
+
+export const useDeleteWorkOrderMutation = () => {
+	return useMutation<
+		Response<DeleteWorkOrderResponse[]>,
+		DefaultError,
+		DeleteWorkOrderRequestParams
+	>({
+		mutationFn: async (data) => {
+			try {
+				return await KyInstance()
+					.delete(`work-orders/${data.work_order_id}`, {
+						json: data,
+					})
+					.json();
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					try {
+						const jsonError = await error.response.json<Response<null>>();
+						throw new Error(jsonError.meta.message);
+					} catch (error) {
+						throw new Error(
+							(error as string | undefined) ??
+								"Delete work order failed, please try again",
+						);
+					}
+				}
+				throw new Error("Delete work order failed");
 			}
 		},
 	});

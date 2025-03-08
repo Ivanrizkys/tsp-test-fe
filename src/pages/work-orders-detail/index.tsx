@@ -370,7 +370,7 @@ export default function WorkOrderDetail() {
 																	{history.name}
 																</p>
 																<p className="text-sm text-muted-foreground">
-																	User ID: {history.created_by}
+																	Created By: {history.created_by.name}
 																</p>
 															</div>
 															<div className="flex items-center gap-1 text-sm text-muted-foreground whitespace-nowrap">

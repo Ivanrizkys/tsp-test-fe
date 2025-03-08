@@ -37,7 +37,11 @@ export interface GetWorkOrderDetailResponse {
 	id: number;
 	in_progress_history: {
 		created_at: Date;
-		created_by: number;
+		created_by: {
+			id: number;
+			name: string;
+			role_id: number;
+		};
 		id: number;
 		name: string;
 		uuid: string;
@@ -93,6 +97,40 @@ export interface CreateWorkOrderResponse {
 		id: number;
 		name: string;
 	};
+	order_number: string;
+	product_name: string;
+	updated_at: Date;
+}
+
+export interface UpdateWorkOrderManagerRequest {
+	in_progress_state?: string;
+	note?: string;
+	operator_id: number;
+	quantity_produced: number;
+	status_id: number;
+	work_order_id: number;
+}
+export interface UpdateWorkOrderOperatorRequest {
+	in_progress_state?: string;
+	note?: string;
+	quantity_produced: number;
+	status_id: number;
+	work_order_id: number;
+}
+
+export interface DeleteWorkOrderBulkRequestBody {
+	work_order_ids: number[];
+}
+export interface DeleteWorkOrderRequestParams {
+	work_order_id: number;
+}
+
+export interface DeleteWorkOrderResponse {
+	actual_completion_date: Date;
+	created_at: Date;
+	due_date: Date;
+	expected_quantity: number;
+	id: number;
 	order_number: string;
 	product_name: string;
 	updated_at: Date;

@@ -1,14 +1,16 @@
+import { Combobox } from "@/components/common/combobox";
 import { DayPicker } from "@/components/common/day-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useGetOperators } from "@/service/user";
 import { useCreateWorkOrderMutation } from "@/service/work-order";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
 interface CreateWoFormValues {
@@ -28,6 +30,7 @@ export default function CreateWorkOrder() {
 		control,
 		formState: { errors },
 	} = useForm<CreateWoFormValues>();
+	const { data: operators, isPending: isPendingOperators } = useGetOperators();
 	const { mutate: doCreateWO, isPending: isPendingCreateWO } =
 		useCreateWorkOrderMutation();
 
@@ -38,7 +41,7 @@ export default function CreateWorkOrder() {
 			{
 				due_date: data.dueDate,
 				expected_quantity: Number(data.expectedQuantitiy),
-				operator_id: Number(data.operator),
+				operator_id: Number(data.operator.split("-")[1]),
 				product_name: data.productName,
 				...(data.note ? { note: data.note } : {}),
 			},
@@ -104,14 +107,32 @@ export default function CreateWorkOrder() {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 					<div>
 						<Label>Operator</Label>
-						<Input
-							placeholder="Insert operator"
-							className="mt-2"
-							aria-invalid={errors.operator ? "true" : "false"}
-							{...register("operator", {
-								required: "Operator can't be empty!",
-							})}
-						/>
+						{!operators || isPendingOperators ? (
+							<Input className="mt-2" disabled />
+						) : (
+							<Controller
+								control={control}
+								rules={{ required: "Operator can/t be empty!" }}
+								name="operator"
+								render={({ field }) => (
+									<Combobox
+										items={operators.data.map((operator) => ({
+											label: operator.name,
+											value: String(operator.id),
+										}))}
+										value={field.value}
+										setValue={(value) => field.onChange(value)}
+										buttonClassName={cn(
+											"mt-2 w-full",
+											!!errors.operator &&
+												"ring-destructive/20 dark:ring-destructive/40 border-destructive",
+										)}
+										popoverClassName="w-radix-popover-triger-width"
+										placeholder="Select operator"
+									/>
+								)}
+							/>
+						)}
 						{errors.operator && (
 							<span role="alert" className="text-destructive text-sm -mt-1">
 								{errors.operator?.message}
@@ -153,12 +174,14 @@ export default function CreateWorkOrder() {
 					/>
 				</div>
 				<div className="flex justify-end gap-2 mt-10">
-					<Button type="button" variant="destructive">
-						Cancel
-					</Button>
+					<Link to="/">
+						<Button type="button" variant="destructive">
+							Cancel
+						</Button>
+					</Link>
 					<Button type="submit" disabled={isPendingCreateWO}>
 						Insert
-						{isPendingCreateWO && <Loader2 className="w-4 h-4 animate-pulse" />}
+						{isPendingCreateWO && <Loader2 className="w-4 h-4 animate-spin" />}
 					</Button>
 				</div>
 			</form>
