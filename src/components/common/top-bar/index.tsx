@@ -10,9 +10,31 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link } from "react-router";
+import { UserRole } from "@/enums/user";
+import { useUserStore } from "@/store/user";
+import { useQueryClient } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export default function TopBar() {
+	const { setUser, user } = useUserStore((state) => state);
+
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+
+	const handleLogOut = () => {
+		queryClient.resetQueries();
+		toast("Logged Out Successfully", {
+			description: "You have been logged out. See you next time!",
+		});
+		navigate("/auth/login");
+		setTimeout(() => {
+			Cookies.remove("token");
+			setUser(null);
+		}, 300);
+	};
+
 	return (
 		<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
 			<nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -29,18 +51,14 @@ export default function TopBar() {
 				>
 					Work Orders
 				</Link>
-				<Link
-					to="/work-order-report"
-					className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
-				>
-					Work Order Report
-				</Link>
-				<Link
-					to="/operator-report"
-					className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
-				>
-					Operator Report
-				</Link>
+				{user?.role === UserRole.PRODUCTION_MANAGER && (
+					<Link
+						to="/operator-report"
+						className="text-muted-foreground transition-colors hover:text-foreground text-nowrap"
+					>
+						Operator Report
+					</Link>
+				)}
 			</nav>
 			<Sheet>
 				<SheetTrigger asChild>
@@ -50,7 +68,7 @@ export default function TopBar() {
 					</Button>
 				</SheetTrigger>
 				<SheetContent side="left">
-					<nav className="grid gap-6 text-lg font-medium">
+					<nav className="grid gap-6 text-lg font-medium p-4">
 						<Link
 							to="/"
 							className="flex items-center gap-2 text-lg font-semibold"
@@ -60,12 +78,6 @@ export default function TopBar() {
 						</Link>
 						<Link to="/" className="hover:text-foreground">
 							Work Orders
-						</Link>
-						<Link
-							to="/work-order-report"
-							className="text-muted-foreground hover:text-foreground"
-						>
-							Work Order Report
 						</Link>
 						<Link
 							to="/operator-report"
@@ -92,9 +104,8 @@ export default function TopBar() {
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>Settings</DropdownMenuItem>
-						<DropdownMenuItem>Support</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>Logout</DropdownMenuItem>
+						<DropdownMenuItem onClick={handleLogOut}>Logout</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
