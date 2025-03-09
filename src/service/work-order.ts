@@ -27,10 +27,17 @@ export const useGetWorkOrders = ({
 	created_at,
 	status_id,
 }: GetWorkOrderParams) => {
+	const createdAtResult = created_at;
+	if (createdAtResult) {
+		const now = new Date();
+		createdAtResult.setHours(now.getHours());
+		createdAtResult.setMinutes(now.getMinutes());
+	}
+
 	const params: Record<string, string | number | boolean> = {
 		page,
 		per_page,
-		...(created_at ? { created_at: created_at.toISOString() } : {}),
+		...(createdAtResult ? { created_at: createdAtResult.toISOString() } : {}),
 		...(status_id ? { status_id } : {}),
 	};
 
