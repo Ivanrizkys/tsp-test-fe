@@ -8,6 +8,7 @@ import { createBrowserRouter } from "react-router";
 const WorkOrders = lazy(() => import("@/pages/work-orders"));
 const CreateWorkOrder = lazy(() => import("@/pages/works-orders-create"));
 const WorkOrdersDetail = lazy(() => import("@/pages/work-orders-detail"));
+const OperatorReport = lazy(() => import("@/pages/operator-report"));
 
 export function getRoutes(user: User | null) {
 	return createBrowserRouter([
@@ -30,7 +31,7 @@ export function getRoutes(user: User | null) {
 							},
 							{
 								path: "/operator-report",
-								element: <div>Hai sayang</div>,
+								element: <OperatorReport />,
 							},
 						]
 					: []),

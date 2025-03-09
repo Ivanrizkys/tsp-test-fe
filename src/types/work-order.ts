@@ -135,3 +135,15 @@ export interface DeleteWorkOrderResponse {
 	product_name: string;
 	updated_at: Date;
 }
+
+export interface GetOperatorWorkOrderOperatorReport {
+	canceled_count: number;
+	completed_count: number;
+	email: string;
+	id: number;
+	in_progress_count: number;
+	name: string;
+	pending_count: number;
+	total_count: number;
+	uuid: string;
+}

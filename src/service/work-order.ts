@@ -6,6 +6,7 @@ import type {
 	DeleteWorkOrderBulkRequestBody,
 	DeleteWorkOrderRequestParams,
 	DeleteWorkOrderResponse,
+	GetOperatorWorkOrderOperatorReport,
 	GetWorkOrderDetailResponse,
 	GetWorkOrderParams,
 	GetWorkOrderStatusResponse,
@@ -59,6 +60,16 @@ export const useGetWorkOrderStatus = () => {
 		queryFn: async () =>
 			KyInstance()("work-orders/status").json<
 				Response<GetWorkOrderStatusResponse[]>
+			>(),
+	});
+};
+
+export const useGetWorkOrderOperatorReport = () => {
+	return useQuery({
+		queryKey: ["work-order-operator-report"],
+		queryFn: async () =>
+			KyInstance()("work-orders/operator-report").json<
+				Response<GetOperatorWorkOrderOperatorReport[]>
 			>(),
 	});
 };
