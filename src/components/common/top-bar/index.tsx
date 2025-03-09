@@ -40,7 +40,7 @@ export default function TopBar() {
 	const { setTheme } = useTheme();
 
 	const handleLogOut = () => {
-		queryClient.resetQueries();
+		queryClient.removeQueries();
 		toast("Logged Out Successfully", {
 			description: "You have been logged out. See you next time!",
 		});
