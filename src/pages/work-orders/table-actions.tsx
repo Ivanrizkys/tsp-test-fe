@@ -87,6 +87,7 @@ export default function WorkOrderTableActions<TData>({
 		formState: { errors: errorEdit },
 	} = useForm<EditWorkOrderFormValues>();
 	const {
+		reset: resetProgress,
 		register: registerProgress,
 		handleSubmit: handleSubmitProgress,
 		formState: { errors: errorProgrress },
@@ -182,10 +183,14 @@ export default function WorkOrderTableActions<TData>({
 					queryClient.invalidateQueries({
 						queryKey: ["work-orders-detail", workOrderId],
 					});
+					queryClient.invalidateQueries({
+						queryKey: ["work-order-operator-report"],
+					});
 					toast("Work Order Progress Added", {
 						description:
 							"Progress has been successfully added to the work order.",
 					});
+					resetProgress();
 					setInsertProgressDialog(false);
 				},
 				onError: (error) => {
@@ -409,7 +414,12 @@ export default function WorkOrderTableActions<TData>({
 
 			<Dialog
 				open={insertProgressDialog}
-				onOpenChange={setInsertProgressDialog}
+				onOpenChange={(open) => {
+					setInsertProgressDialog(open);
+					if (!open) {
+						resetProgress();
+					}
+				}}
 			>
 				<DialogContent>
 					<DialogHeader>
