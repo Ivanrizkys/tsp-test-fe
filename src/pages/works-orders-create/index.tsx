@@ -149,6 +149,11 @@ export default function CreateWorkOrder() {
 							render={({ field }) => (
 								<DayPicker
 									date={field.value}
+									disabled={[
+										{
+											before: new Date(),
+										},
+									]}
 									setDate={(date) => field.onChange(date)}
 									buttonClassName={cn(
 										"mt-2 w-full",
