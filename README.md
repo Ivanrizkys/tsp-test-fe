@@ -1,54 +1,55 @@
-# React + TypeScript + Vite
+# Fullstack Test (FE) - Ivan Rizky Saputra
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![thumbnail](https://res.cloudinary.com/draaoe7rc/image/upload/v1741524757/7218c317-1507-4347-a4eb-fa5bcf6ade26.png)
 
-Currently, two official plugins are available:
+<p align="center">
+<a href="https://tsp-test-fe.vercel.app/">Live Demo</a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Website ini dibuat untuk mengikuti Fullstack Test untuk PT Tri Sinar Purnama. Merupakan work order management yang dapat diakses oleh dua level pengguna (Production Manager dan Operator). Untuk backend dapat di akses di repo [ini](https://github.com/Ivanrizkys/tsp-test-be).
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React
+- Typescript
+- Tanstack Query
+- Zustand
+- TailwindcssV4 with Shadcn
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Halaman
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Login
+- List Work Order
+- Tambah Work Order
+- Operator Report (untuk role Production Manager)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Requirement
+- Node 22.11.0 
+- Pnpm [Lihat Cara Installasi](https://pnpm.io/installation)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Run on Local
+
+- Clone github repository ini
+- Masuk ke directory penyimpanan
+- Install semua dependency mengunakan "pnpm install" atau menggunakan package manager lainya.
+- Setup ".env" file, dapat melihat ".env.example" sebagai acuan.
+- Selanjutnya, jalankan project di terminal menggunakan "pnpm run dev" or or using another package manager.
+- Buka [http://localhost:5173/](http://localhost:5173/) dengan browser untuk melihat hasilnya.
+
+## Deploy on Vercel
+
+Untuk memudahkan proses deployment, website ini sekarang di deploy menggunakan vercel. Untuk langkah langkah deployment hanya membutuhkan akun [Vercel](https://vercel.com/) yang tertaut dengan github tempat penyimpanan project. Kurang lebih langkah langkahnhya seperti ini.
+
+- Import project dari github ke vercel
+- Tambahkan environtment variabel
+- Klik deploy
+
+## Deploy on Own VPS
+
+Kurang lebih, langkah langkah untuk proses deployment project ini di vps adalah seperti ini.
+
+- Install Nodejs (disarankan untuk menggunakan versi 22.11.0).
+- Instlal pnpm untuk package managernya.
+- Install nginx atau alternatif lainya.
+- Jalankan perintah `pnpm install` setelah itu `pnpm build`. Folder dist akan dihasilkan setelah proses ini selesai.
+- Arahkan proxy dengan menggunakan nginx ke file dist/index.html
