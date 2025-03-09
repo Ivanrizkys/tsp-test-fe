@@ -19,6 +19,7 @@ import {
 	useMutation,
 	useQuery,
 } from "@tanstack/react-query";
+import { endOfDay } from "date-fns";
 import { HTTPError } from "ky";
 
 export const useGetWorkOrders = ({
@@ -27,11 +28,9 @@ export const useGetWorkOrders = ({
 	created_at,
 	status_id,
 }: GetWorkOrderParams) => {
-	const createdAtResult = created_at;
+	let createdAtResult = created_at;
 	if (createdAtResult) {
-		const now = new Date();
-		createdAtResult.setHours(now.getHours());
-		createdAtResult.setMinutes(now.getMinutes());
+		createdAtResult = endOfDay(createdAtResult);
 	}
 
 	const params: Record<string, string | number | boolean> = {
