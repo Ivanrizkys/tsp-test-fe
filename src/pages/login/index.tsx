@@ -102,7 +102,11 @@ export default function Login() {
 								</span>
 							)}
 						</div>
-						<Button type="submit" className="w-full">
+						<Button
+							type="submit"
+							className="w-full"
+							disabled={isPendingLoading}
+						>
 							Login
 							{isPendingLoading && <Loader2 className="w-4 h-4 animate-spin" />}
 						</Button>
