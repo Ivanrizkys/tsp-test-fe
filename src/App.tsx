@@ -17,7 +17,7 @@ function App() {
 	const user = useUserStore((state) => state.user);
 
 	return (
-		<ThemeProvider>
+		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 			<QueryClientProvider client={queryClient}>
 				<RouterProvider router={getRoutes(user)} />
 				<Toaster position="top-right" />
