@@ -33,7 +33,7 @@ Website ini dibuat untuk mengikuti Fullstack Test untuk PT Tri Sinar Purnama. Me
 - Masuk ke directory penyimpanan
 - Install semua dependency mengunakan "pnpm install" atau menggunakan package manager lainya.
 - Setup ".env" file, dapat melihat ".env.example" sebagai acuan.
-- Selanjutnya, jalankan project di terminal menggunakan "pnpm run dev" or or using another package manager.
+- Selanjutnya, jalankan project di terminal menggunakan "pnpm run dev" atau menggunakan package manager lainya.
 - Buka [http://localhost:5173/](http://localhost:5173/) dengan browser untuk melihat hasilnya.
 
 ## Deploy on Vercel
