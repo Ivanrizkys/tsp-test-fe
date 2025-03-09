@@ -9,10 +9,11 @@ import { cn } from "@/lib/utils";
 import type { ClassValue } from "clsx";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import type { SelectSingleEventHandler } from "react-day-picker";
+import type { Matcher, SelectSingleEventHandler } from "react-day-picker";
 
 interface DayPickerProps {
 	date?: Date;
+	disabled?: Matcher | Matcher[];
 	setDate?: SelectSingleEventHandler;
 	buttonClassName?: ClassValue;
 	placeholder?: string;
@@ -20,6 +21,7 @@ interface DayPickerProps {
 
 export function DayPicker({
 	date,
+	disabled,
 	setDate,
 	buttonClassName,
 	placeholder,
@@ -48,6 +50,7 @@ export function DayPicker({
 			<PopoverContent className="w-auto p-0" align="start">
 				<Calendar
 					mode="single"
+					disabled={disabled}
 					selected={date}
 					onSelect={setDate}
 					initialFocus
